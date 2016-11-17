@@ -1,0 +1,55 @@
+https://zhidao.baidu.com/question/1541283428037931227.html
+
+//采纳网址
+http://m.blog.csdn.net/article/details?id=46738929
+
+第一步：创建本地仓库
+git init
+
+第二步：将本地的仓库关联到github上
+git remote add origin https://github.com/liheng-githup/jsEngile.git
+
+第三步：将github代码下载到本地
+git pull origin master
+
+第四步：将需要添加的文件添加到本地仓库中
+git add .    备注：如果要指定文件就将add后面的 . 换成具体的文件名
+git commit -m "注释语句"   提交到本地仓库
+
+第五步：如果提示需要邮箱和用户名，全局配置
+git config --global user.email "you@example.com"  
+git config --global user.name "Your Name"
+
+第六步：提交本地仓库代码到github上，中间可能会让你输入Username和Password，你只要输入github的账号和密码就行了
+git push -u origin master
+
+
+
+// 修改文件重新上传
+(1)首先需要add，比如.config是被修改的文件，则  
+ git add .config  
+(2)然后执行git commit -m "modify .config for some reason"  
+(3)然后git push 到git服务器  
+(4)更新：git push -u origin master  
+(5)查看log：git log
+
+
+// 删除github上面的分支
+命令：$ Git push origin 【空格】【冒号】【你的分支名字】
+比如我github上有master和feature分支，我现在想着删除feature分支，命令如下：
+$ git push origin :feature
+
+ok，这样你github上的远程分支就被删除了。别问为什么，就是删除了！！！
+
+
+// git tag — 标签相关操作
+1.创建tag
+git tag -a v0.0.1 -m “0.0.1版本”  // 打标签
+$  git push origin v0.0.1	    // 发布标签
+
+
+
+
+
+
+
