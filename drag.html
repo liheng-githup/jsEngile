@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="http://www.softwhy.com/" />
+    <title>蚂蚁部落</title>
+    <style type="text/css">
+        #box{
+            width:400px;
+            height:50px;
+            background-color:red;
+            margin:0px auto;
+            position:relative;
+        }
+        #drag{
+            width:50px;
+            height:50px;
+            background:green;
+            position:absolute;
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload=function(){
+            var obox=document.getElementById("box");
+            var odrag=document.getElementById("drag");
+            var flag=false;
+            var x,y;
+            var ol,ot;
+            odrag.onmousedown=function(ev){
+                var ev=window.event||ev;
+                flag=true;
+                x=ev.clientX;
+                y=ev.clientY;
+                ol=odrag.offsetLeft;
+                ot=odrag.offsetTop;
+            }
+            document.onmousemove=function(ev){
+                if(flag==false) return;
+                var ev=window.event||ev;
+                var _x,_y;
+                _x=ev.clientX-x+ol;
+                _y=ev.clientY-y+ot;
+                if(_x<0) _x=0;
+                if(_y<0) _y=0;
+                if(_x>obox.offsetWidth-odrag.offsetWidth) _x=obox.offsetWidth-odrag.offsetWidth;
+                if(_y>obox.offsetHeight-odrag.offsetHeight) _y=obox.offsetHeight-odrag.offsetHeight;
+
+                odrag.style.left=_x+"px";
+                odrag.style.top=_y+"px";
+            }
+            document.onmouseup=function(){flag=false;}
+        }
+    </script>
+</head>
+<body>
+<div id="box">
+    <div id="drag"></div>
+</div>
+</body>
+</html>
+
+以上代码实现了我们的要求，可以将指定的绿色的div的拖动范围限定在红色div之内，下面介绍一下它的实现过程。
+一.代码注释:
+1.window.onload=function(){}，文档内容完全加载完毕再去执行函数中的代码。
+2.var obox=document.getElementById("box")，获取id属性值为box元素对象。
+3.var odrag=document.getElementById("drag")，获取id属性会为drag的元素对象。
+4.var flag=false，声明一个变量flag并赋初值为false，它用来标识是否可以拖动，为false不可拖动，为true可以拖动。
+5.var x,y，声明两个变量，用来存储鼠标按下时鼠标指针在浏览器客户区的坐标。
+6.var ol,ot，声明两个变量，用来存储绿色div距离红色div距离。
+7.odrag.onmousedown=function(ev){}，为绿色div注册onmousedown事件处理函数，ev是事件对象。
+8.var ev=window.event||ev，事件对象的兼容性处理。
+9.flag=true，设置为true，也就是说当鼠标在绿色div中按下时候才可以进行拖动。
+10.x=ev.clientX，获取鼠标按下时，鼠标指针距离浏览器客户区左端的距离。
+11.y=ev.clientY,获取鼠标按下时，鼠标指针距离浏览器客户区顶端的距离。
+12.ol=odrag.offsetLeft，获取鼠标按下时，绿色div的左边缘距离红色div左侧的距离。
+13.ot=odrag.offsetTop，获取鼠标按下时，绿色div的上边缘距离红色div上侧的距离。
+14.document.onmousemove=function(ev){}，为document注册onmousemove事件处理函数，很多朋友可能因为为什么要将其注册在document上而不是odrag，这是为了防止当鼠标拖动过程中，鼠标指针移出odrag导致拖动无效现象。
+15.if(flag==false) return，如果flag值为false，这直接跳出。
+16.var ev=window.event||ev，事件对象的兼容性处理。
+17.var _x,_y,声明两个局部变量，用来存储绿色div的left和top属性值。
+18._x=ev.clientX-x+ol，获取拖动过程中，left属性值，一个数学问题。
+19._y=ev.clientY-y+ot，获取拖动过程中，top属性值，一个数学问题。
+20.if(_x<0) _x=0，防止超出左边缘。
+21.if(_y<0) _y=0，防止超出上边缘。
+22.if(_x>obox.offsetWidth-odrag.offsetWidth) _x=obox.offsetWidth-odrag.offsetWidth，防止超出右边缘。
+23.if(_y>obox.offsetHeight-odrag.offsetHeight) _y=obox.offsetHeight-odrag.offsetHeight，防止超出下边缘。
+24.odrag.style.left=_x+"px"，odrag.style.top=_y+"px"设置绿色div的left和top值。
+25.document.onmouseup=function(){flag=false;}，当鼠标松开时，将flag设置为false。
